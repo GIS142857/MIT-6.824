@@ -46,14 +46,14 @@ type reportMsg struct {
 // Your code here -- RPC handlers for the worker to call.
 
 func (c *Coordinator) Heartbeat(request *HeartbeatRequest, response *HeartbeatResponse) error {
-	msg := heartbeatMsg{response: response, ok: make(chan struct{})}
+	msg := heartbeatMsg{response, make(chan struct{})}
 	c.heartbeatCh <- msg
 	<-msg.ok
 	return nil
 }
 
 func (c *Coordinator) Report(request *ReportRequest, response *ReportRequest) error {
-	msg := reportMsg{request: request, ok: make(chan struct{})}
+	msg := reportMsg{request, make(chan struct{})}
 	c.reportCh <- msg
 	<-msg.ok
 	return nil
@@ -123,6 +123,7 @@ func (c *Coordinator) selectTask(response *HeartbeatResponse) bool {
 			break
 		}
 	}
+
 	if !hasNewJob {
 		response.JobType = WaitJob
 	}

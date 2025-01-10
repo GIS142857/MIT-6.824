@@ -1,3 +1,3 @@
-module MIT-6.824
+module 6.824
 
-go 1.22
+go 1.23.4

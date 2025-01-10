@@ -1,6 +1,8 @@
 package mr
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type SchedulePhase uint8
 
@@ -8,23 +10,6 @@ const (
 	MapPhase SchedulePhase = iota
 	ReducePhase
 	CompletePhase
-)
-
-type JobType uint8
-
-const (
-	MapJob JobType = iota
-	ReduceJob
-	WaitJob
-	CompleteJob
-)
-
-type TaskStatus uint8
-
-const (
-	Idle TaskStatus = iota
-	Working
-	Finished
 )
 
 func (phase SchedulePhase) String() string {
@@ -39,6 +24,15 @@ func (phase SchedulePhase) String() string {
 	panic(fmt.Sprintf("unexpected SchedulePhase %d", phase))
 }
 
+type JobType uint8
+
+const (
+	MapJob JobType = iota
+	ReduceJob
+	WaitJob
+	CompleteJob
+)
+
 func (job JobType) String() string {
 	switch job {
 	case MapJob:
@@ -52,6 +46,14 @@ func (job JobType) String() string {
 	}
 	panic(fmt.Sprintf("unexpected jobType %d", job))
 }
+
+type TaskStatus uint8
+
+const (
+	Idle TaskStatus = iota
+	Working
+	Finished
+)
 
 func generateMapResultFileName(mapNumber, reduceNumber int) string {
 	return fmt.Sprintf("mr-%d-%d", mapNumber, reduceNumber)

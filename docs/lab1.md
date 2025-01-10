@@ -148,3 +148,18 @@ func (c *Coordinator) schedule() {
 当然，由于检查任务状态是通过遍历 task 列表来做的，如果这个列表有几百上千万那么多，那么现在的写法可能会有点问题，但如果只是几百上千，那对应的 CPU 操作耗时实际上也不会有什么瓶颈。
 
 总之，这个实现不影响正确性也不是很影响性能，但能够降低代码的复杂度，就是看起来似乎有点太懒了。
+
+
+通过所有测试之后运行代码：
+1.启动 coordinator: 
+
+```bash
+~/MIT-6.824/src/main$ go run -race mrcoordinator.go pg-*.txt
+```
+
+2.启动 worker:
+
+```bash
+~/MIT-6.824/src/main$ go run -race mrworker.go ../mrapps/wc.so
+```
+

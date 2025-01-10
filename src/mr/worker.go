@@ -13,7 +13,7 @@ import "log"
 import "net/rpc"
 import "hash/fnv"
 
-// Map functions return a slice of KeyValue.
+// KeyValue Map functions return a slice of KeyValue.
 type KeyValue struct {
 	Key   string
 	Value string
@@ -119,8 +119,8 @@ func doReduceTask(reduceF func(string, []string) string, response *HeartbeatResp
 		results[kv.Key] = append(results[kv.Key], kv.Value)
 	}
 	var buf bytes.Buffer
-	for key, value := range results {
-		output := reduceF(key, value)
+	for key, values := range results {
+		output := reduceF(key, values)
 		fmt.Fprintf(&buf, "%v %v\n", key, output)
 	}
 	atomicWriteFile(generateReduceResultFileName(response.Id), &buf)
@@ -141,9 +141,8 @@ func doReport(id int, phase SchedulePhase) {
 // usually returns true.
 // returns false if something goes wrong.
 func call(rpcname string, args interface{}, reply interface{}) bool {
-	// c, err := rpc.DialHTTP("tcp", "127.0.0.1"+":1234")
-	sockname := coordinatorSock()
-	c, err := rpc.DialHTTP("unix", sockname)
+	sockName := coordinatorSock()
+	c, err := rpc.DialHTTP("unix", sockName)
 	if err != nil {
 		log.Fatal("dialing:", err)
 	}

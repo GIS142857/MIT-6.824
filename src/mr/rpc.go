@@ -33,6 +33,8 @@ type ReportRequest struct {
 	Phase SchedulePhase
 }
 
+type ReportResponse struct{}
+
 func (response HeartbeatResponse) String() string {
 	switch response.JobType {
 	case MapJob:
