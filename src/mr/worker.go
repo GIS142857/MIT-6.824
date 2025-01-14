@@ -45,12 +45,6 @@ func Worker(mapf func(string, string) []KeyValue, reducef func(string, []string)
 			panic(fmt.Sprintf("unexpected jobType %v", response.JobType))
 		}
 	}
-
-	// Your worker implementation here.
-
-	// uncomment to send the Example RPC to the coordinator.
-	// CallExample()
-
 }
 
 // example function to show how to make an RPC call to the coordinator.
